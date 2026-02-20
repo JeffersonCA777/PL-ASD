@@ -10,8 +10,8 @@ print(f'Inicializando socket en el puerto {PORT}...')
 
 # Paso 2
 # Crear el socket
-s = socket.socket() # Vinculamos el socket a la direccion y puerto elegido
-s.bind((HOST, PORT))
+s = socket.socket() 
+s.bind((HOST, PORT)) # Vinculamos el socket a la direccion y puerto elegido
 s.listen(5)
 
 print(f'Servidor escuchando en {HOST}:{PORT}')
