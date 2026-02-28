@@ -10,35 +10,35 @@ PUERTO_MAYUS = 7778 # Puerto para servicio eco en mayusculas
 selector = selectors.DefaultSelector()  # Elige el mejor metodo segun el sistema operativo
 
 # 2. FUNCIONES PARA SERVICIO ECO
-def atender_eco(sock, mask):    # sock-socket que tiene actividad, mask-indicar si lectura/escritura
-    datos = sock.recv(1024)
-    if datos:
-        sock.send(datos)  # Eco: devuelve lo mismo
-        print(f"[ECO] {datos.decode().strip()}")
+def atender_eco(sock, mask):    # sock contiene el socket que tiene actividad, mask contendrá información si lectura/escritura
+    datos = sock.recv(1024) # Número maximo de bytes a recibir
+    if datos: # Condición que nos indica si contiene en datos lo que recibimos
+        sock.send(datos)  # Eco: devuelve lo mismo que hemos recibido
+        print(f"[ECO] {datos.decode().strip()}") # datos.decode() convierte los bytes en texto y strip() quita espacios
     else:
         print("[ECO] Cliente desconectado")
-        selector.unregister(sock)
+        selector.unregister(sock) # Quitamos de la lista de vigilados a este socket "sock"
         sock.close()
 
-def aceptar_eco(sock, mask):
-    cliente, direccion = sock.accept()
+def aceptar_eco(sock, mask): # Definimos una funcion para aceptar un socket con actividad "sock" y su tipo de evento "mask"
+    cliente, direccion = sock.accept() # Nuevo socket para hablar con el cliente y direccion IP y puerto del cliente
     cliente.setblocking(False)
-    selector.register(cliente, selectors.EVENT_READ, atender_eco)
+    selector.register(cliente, selectors.EVENT_READ, atender_eco) # register es nuestro organizador
     print(f"[ECO] Cliente conectado desde {direccion}")
 
 # 3. FUNCIONES PARA SERVICIO MAYÚSCULAS
-def atender_mayus(sock, mask):
-    datos = sock.recv(1024)
+def atender_mayus(sock, mask):  # sock contiene el socket que tiene actividad, mask contendrá información si lectura/escritura
+    datos = sock.recv(1024) # Recibe los datos del cliente
     if datos:
-        mensaje = datos.decode().strip().upper()  # Convertir a mayúsculas
-        sock.send(mensaje.encode())
+        mensaje = datos.decode().strip().upper()  # Convertir bytes en textos, quita espacios extras, convierte en mayusculas
+        sock.send(mensaje.encode()) # encode() convierte el texto en bytes
         print(f"[MAYÚS] {mensaje}")
     else:
         print("[MAYÚS] Cliente desconectado")
         selector.unregister(sock)
         sock.close()
 
-def aceptar_mayus(sock, mask):
+def aceptar_mayus(sock, mask): # Definimos una funcion para aceptar clientes
     cliente, direccion = sock.accept()
     cliente.setblocking(False)
     selector.register(cliente, selectors.EVENT_READ, atender_mayus)
@@ -65,7 +65,7 @@ print(f"Servidor MAYÚSCULAS escuchando en puerto {PUERTO_MAYUS}")
 # 6. BUCLE PRINCIPAL (REACTOR)
 print("Servidor listo. Esperando conexiones...")
 while True:
-    eventos = selector.select()
-    for key, mask in eventos:
-        callback = key.data
+    eventos = selector.select() # Método que se bloquea hasta que algo ocurra 
+    for key, mask in eventos: # key contendrá la informacion del socket y mask dira si es lectura/escritura
+        callback = key.data # Guardamos la función que registramos para ese socket
         callback(key.fileobj, mask)
