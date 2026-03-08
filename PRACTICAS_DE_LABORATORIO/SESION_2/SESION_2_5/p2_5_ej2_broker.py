@@ -45,7 +45,7 @@ try:
             _, nick = partes
             if nick in registros:
                 ip, puerto = registros[nick]
-                respuesta = f"OK {ip} {puerto}\n"  # <<--- ¡CORREGIDO!
+                respuesta = f"OK {ip} {puerto}\n"  # Respuesta con formato: "OK IP PUERTO"
             else:
                 respuesta = "ERROR\n"
 
