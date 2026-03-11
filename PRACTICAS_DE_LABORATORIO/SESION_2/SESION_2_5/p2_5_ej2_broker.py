@@ -11,39 +11,39 @@ print(f"Broker escuchando en {HOST}:{PUERTO}...")
 
 try:
     while True:
-        cliente, direccion = servidor.accept()
+        cliente, direccion = servidor.accept() # Esperar a que un cliente se conecte
         print(f"Cliente conectado desde {direccion}")
 
-        data = cliente.recv(1024).decode().strip()
+        data = cliente.recv(1024).decode().strip() # Recibir datos del cliente y decodificar a string
         print(f"Recibido: {data}")
 
-        partes = data.split()
+        partes = data.split() # Dividir el comando en partes
         comando = partes[0] if partes else ""
         respuesta = ""
 
-        if comando == "JOIN" and len(partes) == 4:
-            _, nick, ip, puerto_str = partes
+        if comando == "JOIN" and len(partes) == 4: # Comando JOIN con formato: "JOIN NICK IP PUERTO"
+            _, nick, ip, puerto_str = partes # Extraer los componentes del comando
             try:
-                puerto = int(puerto_str)
-                if nick in registros:
+                puerto = int(puerto_str) # Convertir el puerto a entero
+                if nick in registros: # Verificar si el nick ya está registrado
                     respuesta = "ERROR\n"
                 else:
-                    registros[nick] = (ip, puerto)
+                    registros[nick] = (ip, puerto) # Registrar el cliente con su IP y puerto
                     respuesta = "OK\n"
-            except ValueError:
+            except ValueError: # Manejar el caso donde el puerto no es un número válido
                 respuesta = "ERROR\n"
 
-        elif comando == "LEAVE" and len(partes) == 2:
+        elif comando == "LEAVE" and len(partes) == 2: # Comando LEAVE con formato: "LEAVE NICK"
             _, nick = partes
-            if nick in registros:
+            if nick in registros: # Verificar si el nick está registrado para eliminarlo
                 del registros[nick]
                 respuesta = "OK\n"
             else:
                 respuesta = "ERROR\n"
 
-        elif comando == "QUERY" and len(partes) == 2:
+        elif comando == "QUERY" and len(partes) == 2: # Comando QUERY con formato: "QUERY NICK"
             _, nick = partes
-            if nick in registros:
+            if nick in registros: # Verificar si el nick está registrado para obtener su IP y puerto
                 ip, puerto = registros[nick]
                 respuesta = f"OK {ip} {puerto}\n"  # Respuesta con formato: "OK IP PUERTO"
             else:
@@ -53,10 +53,10 @@ try:
             respuesta = "ERROR\n"
             print(f"Comando inválido: {data}")
 
-        cliente.send(respuesta.encode())
-        cliente.close()
+        cliente.send(respuesta.encode()) # Enviar la respuesta al cliente codificada a bytes
+        cliente.close() # Cerrar la conexión con el cliente después de procesar su solicitud
 
-except KeyboardInterrupt:
+except KeyboardInterrupt: # Permitir detener el broker con Ctrl+C
     print("\nBroker detenido por el usuario")
 finally:
-    servidor.close()
+    servidor.close() # Cerrar el socket del servidor al finalizar
