@@ -6,11 +6,8 @@ PORT = 7000
 
 # 1. FUNCIÓN PARA MANEJAR CADA CLIENTE (CORRUTINA)
 async def manejar_cliente(reader, writer):
-    """
-    reader: para leer datos del cliente
-    writer: para escribir datos al cliente
-    """
-    direccion = writer.get_extra_info('peername')
+
+    direccion = writer.get_extra_info('peername') # Obtener dirección del cliente
     print(f"Cliente conectado desde {direccion}")
     
     try:
@@ -55,6 +52,6 @@ async def main():
 # 3. PUNTO DE ENTRADA
 if __name__ == '__main__':
     try:
-        asyncio.run(main())
-    except KeyboardInterrupt:
+        asyncio.run(main()) # Ejecutar la función principal
+    except KeyboardInterrupt: # Permitir detener con Ctrl+C
         print("\nServidor detenido por el usuario")
