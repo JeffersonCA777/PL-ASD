@@ -133,4 +133,4 @@ async def main(): # Función principal del programa
         print("Chat finalizado")
 
 if __name__ == "__main__": # Ejecutar la función principal usando asyncio
-    asyncio.run(main())
+    asyncio.run(main()) # Ejecutar la función principal usando asyncio
