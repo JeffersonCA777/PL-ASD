@@ -1,5 +1,5 @@
-import sys
-import socket
+import sys # Biblioteca para manejar argumentos de línea de comandos
+import socket # Importamos la libreria "socket" para crear un servidor TCP/IP
 import threading # Importamos la libreria "threading" para poder crear hilos
 
 # Función que ejecuta cada hilo para atender a UN cliente
@@ -17,12 +17,12 @@ if len(sys.argv) == 1:      # Si ejecutas sin argumentos
 else:
     PORT = int(sys.argv[1]) # Si ejecutas con argumento, usa ese puerto
 
-HOST = "127.0.0.1"
+HOST = "127.0.0.1" # Dirección IP del servidor (localhost)
 
 # Crear socket del servidor
 print("Arrancando servidor...")
 s = socket.socket()
-s.bind((HOST, PORT))
+s.bind((HOST, PORT)) # Asociar el socket a la dirección y puerto
 s.listen(5)
 print(f"Servidor escuchando en {HOST}:{PORT}")
 
