@@ -22,7 +22,7 @@ def dar_servicio(conn):
     """Atiende a un cliente: recibe datos y los envía de vuelta (eco)"""
     while True:
         data = conn.recv(1024)
-        print(f'📥 Recibidos {len(data)} bytes')
+        print(f'Recibidos {len(data)} bytes')
         if not data:
             print(f'Cliente desconectado')
             break
