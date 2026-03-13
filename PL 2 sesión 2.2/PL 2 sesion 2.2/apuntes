@@ -1,0 +1,17 @@
+def saludar(): --- funcion 
+creacion de hilos threadibng 
+hilo termina cuando la funcion saludar ternmina.
+cada hilo es independiente 
+
+para tener varios hilos:
+usamos un bucle for i range (n)
+
+hilos para saludar a cada persona: 
+thread tiene unn 2do parametro args=, hay espficarlo en una tupla (ejm personas, )
+aunque tengo una sola fuincion saludar, puedo llamarlo varias veces para que cada hilo pueda hacer su 
+labor independiente. 
+Todos los hilos comparten lo que hay en un proceso, lo cual no es correcta ya que al transmitor puede generar caos
+hay usar colas bloqueantes.c 
+
+en este primer ejercici se importo las libraries time y threading
+este codigo hace que cada hilo funcione separada e independiente logrando tener un tiempp de 2 segundos. 
