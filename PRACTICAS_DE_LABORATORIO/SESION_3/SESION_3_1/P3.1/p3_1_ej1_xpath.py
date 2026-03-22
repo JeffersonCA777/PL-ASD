@@ -24,7 +24,7 @@ if libros_multi_autor:
     print(f" Se encontraron {len(libros_multi_autor)} libros con más de un autor:\n") # Si se encontraron libros con más de un autor, los listamos mostrando su título y precio
     for i, libro in enumerate(libros_multi_autor, 1):
         titulo = libro.xpath("title/text()")[0] if libro.xpath("title/text()") else "Sin título" # Obtenemos el título del libro, si no existe mostramos "Sin título"
-        precio = libro.xpath("price/text()")[0] if libro.xpath("price/text()") else "Sin precio" # Obtenemos el precio del libro, si no existe mostramos "Sin precio"
+        precio = libro.xpath("price/text()")[0] if libro.xpath("price/text()") else "Sin precio" #
         print(f"  {i}. {titulo} - {precio} €")
 else:
     print("No se encontraron libros con más de un autor.")

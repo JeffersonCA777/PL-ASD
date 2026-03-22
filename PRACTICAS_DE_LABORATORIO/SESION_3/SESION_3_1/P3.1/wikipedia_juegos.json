@@ -1,0 +1,366 @@
+[
+  {
+    "posicion": 1,
+    "titulo": "520",
+    "ventas_millones": null,
+    "plataforma": "Multi-platform",
+    "año": 1988
+  },
+  {
+    "posicion": 350,
+    "titulo": "Minecraft",
+    "ventas_millones": null,
+    "plataforma": "2011",
+    "año": null
+  },
+  {
+    "posicion": 2,
+    "titulo": "225",
+    "ventas_millones": null,
+    "plataforma": "Multi-platform",
+    "año": 2013
+  },
+  {
+    "posicion": 3,
+    "titulo": "82.9",
+    "ventas_millones": null,
+    "plataforma": "Wii",
+    "año": 2006
+  },
+  {
+    "posicion": 4,
+    "titulo": "82",
+    "ventas_millones": null,
+    "plataforma": "Multi-platform",
+    "año": 2018
+  },
+  {
+    "posicion": 5,
+    "titulo": "79.05",
+    "ventas_millones": null,
+    "plataforma": "Wii U",
+    "año": 2014
+  },
+  {
+    "posicion": 6,
+    "titulo": "75",
+    "ventas_millones": null,
+    "plataforma": "Multi-platform",
+    "año": 2017
+  },
+  {
+    "posicion": 7,
+    "titulo": "64",
+    "ventas_millones": null,
+    "plataforma": "Multi-platform",
+    "año": 2011
+  },
+  {
+    "posicion": 8,
+    "titulo": "60",
+    "ventas_millones": null,
+    "plataforma": "Multi-platform",
+    "año": 2015
+  },
+  {
+    "posicion": 9,
+    "titulo": "58",
+    "ventas_millones": null,
+    "plataforma": "Multi-platform",
+    "año": 1985
+  },
+  {
+    "posicion": 10,
+    "titulo": "55",
+    "ventas_millones": null,
+    "plataforma": "Multi-platform",
+    "año": 2016
+  },
+  {
+    "posicion": 11,
+    "titulo": "50",
+    "ventas_millones": null,
+    "plataforma": "Multi-platform",
+    "año": 2016
+  },
+  {
+    "posicion": 50,
+    "titulo": "The Sims",
+    "ventas_millones": null,
+    "plataforma": "2000",
+    "año": null
+  },
+  {
+    "posicion": 50,
+    "titulo": "None",
+    "ventas_millones": null,
+    "plataforma": "2016",
+    "año": null
+  },
+  {
+    "posicion": 14,
+    "titulo": "49.32",
+    "ventas_millones": null,
+    "plataforma": "Nintendo Switch",
+    "año": 2020
+  },
+  {
+    "posicion": 15,
+    "titulo": "47.44",
+    "ventas_millones": null,
+    "plataforma": "Multi-platform",
+    "año": 1996
+  },
+  {
+    "posicion": 16,
+    "titulo": "43.8",
+    "ventas_millones": null,
+    "plataforma": "Wii",
+    "año": 2007
+  },
+  {
+    "posicion": 17,
+    "titulo": "43",
+    "ventas_millones": null,
+    "plataforma": "Multi-platform",
+    "año": 2015
+  },
+  {
+    "posicion": 18,
+    "titulo": "41",
+    "ventas_millones": null,
+    "plataforma": "Multi-platform",
+    "año": 2019
+  },
+  {
+    "posicion": 19,
+    "titulo": "40",
+    "ventas_millones": null,
+    "plataforma": "Multi-platform",
+    "año": 2023
+  },
+  {
+    "posicion": 40,
+    "titulo": "Payday",
+    "ventas_millones": null,
+    "plataforma": "2013",
+    "año": null
+  },
+  {
+    "posicion": 40,
+    "titulo": "Sonic the Hedgehog",
+    "ventas_millones": null,
+    "plataforma": "1991",
+    "año": null
+  },
+  {
+    "posicion": 22,
+    "titulo": "37.44",
+    "ventas_millones": null,
+    "plataforma": "Nintendo Switch",
+    "año": 2018
+  },
+  {
+    "posicion": 23,
+    "titulo": "37.38",
+    "ventas_millones": null,
+    "plataforma": "Wii",
+    "año": 2008
+  },
+  {
+    "posicion": 24,
+    "titulo": "35.34",
+    "ventas_millones": null,
+    "plataforma": "Multi-platform",
+    "año": 2017
+  },
+  {
+    "posicion": 25,
+    "titulo": "35",
+    "ventas_millones": null,
+    "plataforma": "Multi-platform",
+    "año": 2020
+  },
+  {
+    "posicion": 26,
+    "titulo": "33.14",
+    "ventas_millones": null,
+    "plataforma": "Wii",
+    "año": 2009
+  },
+  {
+    "posicion": 27,
+    "titulo": "30.8",
+    "ventas_millones": null,
+    "plataforma": "Nintendo DS",
+    "año": 2006
+  },
+  {
+    "posicion": 28,
+    "titulo": "30.32",
+    "ventas_millones": null,
+    "plataforma": "Wii",
+    "año": 2009
+  },
+  {
+    "posicion": 29,
+    "titulo": "30.27",
+    "ventas_millones": null,
+    "plataforma": "Nintendo Switch",
+    "año": 2017
+  },
+  {
+    "posicion": 30,
+    "titulo": "30.12",
+    "ventas_millones": null,
+    "plataforma": "Game Boy Color",
+    "año": 1999
+  },
+  {
+    "posicion": 31,
+    "titulo": "30",
+    "ventas_millones": null,
+    "plataforma": "Multi-platform",
+    "año": 2022
+  },
+  {
+    "posicion": 30,
+    "titulo": "Borderlands",
+    "ventas_millones": null,
+    "plataforma": "2012",
+    "año": null
+  },
+  {
+    "posicion": 30,
+    "titulo": "Call of Duty",
+    "ventas_millones": null,
+    "plataforma": "2020",
+    "año": null
+  },
+  {
+    "posicion": 30,
+    "titulo": "The Elder Scrolls",
+    "ventas_millones": null,
+    "plataforma": "2011",
+    "año": null
+  },
+  {
+    "posicion": 35,
+    "titulo": "29.1",
+    "ventas_millones": null,
+    "plataforma": "Multi-platform",
+    "año": 2018
+  },
+  {
+    "posicion": 36,
+    "titulo": "28.3",
+    "ventas_millones": null,
+    "plataforma": "Famicom / NES",
+    "año": 1984
+  },
+  {
+    "posicion": 37,
+    "titulo": "28.08",
+    "ventas_millones": null,
+    "plataforma": "Nintendo Switch",
+    "año": 2022
+  },
+  {
+    "posicion": 38,
+    "titulo": "28.02",
+    "ventas_millones": null,
+    "plataforma": "Wii",
+    "año": 2006
+  },
+  {
+    "posicion": 39,
+    "titulo": "28",
+    "ventas_millones": null,
+    "plataforma": "Multi-platform",
+    "año": 2024
+  },
+  {
+    "posicion": 40,
+    "titulo": "27.5",
+    "ventas_millones": null,
+    "plataforma": "Multi-platform",
+    "año": 2004
+  },
+  {
+    "posicion": 41,
+    "titulo": "27.08",
+    "ventas_millones": null,
+    "plataforma": "Nintendo Switch",
+    "año": 2019
+  },
+  {
+    "posicion": 42,
+    "titulo": "27",
+    "ventas_millones": null,
+    "plataforma": "Multi-platform",
+    "año": 2021
+  },
+  {
+    "posicion": 43,
+    "titulo": "26.6",
+    "ventas_millones": null,
+    "plataforma": "PS3",
+    "año": 2013
+  },
+  {
+    "posicion": 44,
+    "titulo": "26.5",
+    "ventas_millones": null,
+    "plataforma": "Multi-platform",
+    "año": 2011
+  },
+  {
+    "posicion": 45,
+    "titulo": "26.2",
+    "ventas_millones": null,
+    "plataforma": "Multi-platform",
+    "año": 2010
+  },
+  {
+    "posicion": 46,
+    "titulo": "26.1",
+    "ventas_millones": null,
+    "plataforma": "Multi-Platform",
+    "año": 2018
+  },
+  {
+    "posicion": 47,
+    "titulo": "25.59",
+    "ventas_millones": null,
+    "plataforma": "Nintendo 3DS",
+    "año": 2016
+  },
+  {
+    "posicion": 48,
+    "titulo": "25.56",
+    "ventas_millones": null,
+    "plataforma": "PC",
+    "año": 2006
+  },
+  {
+    "posicion": 49,
+    "titulo": "25.5",
+    "ventas_millones": null,
+    "plataforma": "Nintendo DS",
+    "año": 2006
+  },
+  {
+    "posicion": 50,
+    "titulo": "25",
+    "ventas_millones": null,
+    "plataforma": "Multi-platform",
+    "año": 2024
+  },
+  {
+    "posicion": 25,
+    "titulo": "Grand Theft Auto",
+    "ventas_millones": null,
+    "plataforma": "2008",
+    "año": null
+  }
+]
