@@ -1,20 +1,8 @@
-"""
-Ejercicio 5 Opcional: Scraping de videojuegos de Wikipedia
-Extrae la lista de videojuegos más vendidos desde Wikipedia.
-"""
-
-import json
+import scrapy
 import re
-from lxml import html
-from pydantic import BaseModel, ValidationError
-import urllib.request
-
-# ============================================================
-# PARTE 1: Definir el modelo de datos con Pydantic
-# ============================================================
+from pydantic import BaseModel
 
 class Videojuego(BaseModel):
-    """Modelo que representa un videojuego (Lista de más vendidos)"""
     posicion: int | None = None
     titulo: str
     ventas_millones: float | None = None
@@ -22,163 +10,106 @@ class Videojuego(BaseModel):
     año: int | None = None
 
 
-# ============================================================
-# PARTE 2: Descargar la página con User-Agent
-# ============================================================
-
-print(" Descargando página de Wikipedia...")
-
-url = "https://en.wikipedia.org/wiki/List_of_best-selling_video_games"
-
-try:
-    req = urllib.request.Request(
-        url,
-        headers={
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-        }
-    )
+class VideojuegosSpider(scrapy.Spider):
+    name = "videojuegos_wikipedia"
     
-    u = urllib.request.urlopen(req)
-    contenido = u.read()
-    u.close()
+    custom_settings = {
+        'USER_AGENT': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+        'HTTPCACHE_ENABLED': True,
+        'FEEDS': {
+            'wikipedia_juegos_scrapy.json': {
+                'format': 'json',
+                'encoding': 'utf8',
+                'indent': 2,
+            },
+        },
+    }
     
-    print(f" Página descargada correctamente ({len(contenido)} bytes)\n")
+    start_urls = [
+        "https://en.wikipedia.org/wiki/List_of_best-selling_video_games"
+    ]
     
-except Exception as e:
-    print(f" Error al descargar la página: {e}")
-    exit(1)
-
-
-# ============================================================
-# PARTE 3: Parsear el HTML con lxml
-# ============================================================
-
-print(" Analizando el HTML...")
-arbol = html.fromstring(contenido)
-
-
-# ============================================================
-# PARTE 4: Encontrar la tabla de juegos más vendidos
-# ============================================================
-
-# Buscar la tabla que contiene Tetris
-tablas = arbol.xpath('//table[contains(., "Tetris") and contains(., "520")]')
-
-if not tablas:
-    print(" No se encontró la tabla de juegos más vendidos")
-    exit(1)
-
-tabla = tablas[0]
-print(" Tabla de juegos más vendidos encontrada\n")
-
-# Obtener las filas de la tabla (excluyendo cabeceras)
-filas = tabla.xpath(".//tr[td]")
-print(f"🎮 Se encontraron {len(filas)} juegos\n")
-
-
-# ============================================================
-# PARTE 5: Extraer los datos de cada juego
-# Basado en la estructura real de la tabla:
-# Columna 0: Posición (ej: 1, 2, 3)
-# Columna 1: Título (ej: Tetris, Minecraft)
-# Columna 2: Ventas (ej: 520, 350, 225)
-# Columna 3: Plataforma (ej: Multi-platform, Wii)
-# Columna 4: Año (ej: 1988, 2011, 2013)
-# ============================================================
-
-lista_juegos = []
-errores = 0
-
-for i, fila in enumerate(filas, 1):
-    print(f" Procesando juego {i} de {len(filas)}...")
+    def limpiar(self, texto):
+        if not texto:
+            return ""
+        texto = re.sub(r'\[\w+\]', '', texto)
+        return texto.strip()
     
-    celdas = fila.xpath(".//td")
-    
-    # --- Posición (columna 0) ---
-    posicion = None
-    if len(celdas) > 0:
-        posicion_elem = celdas[0].xpath(".//text()")
-        if posicion_elem:
-            try:
-                posicion = int(posicion_elem[0].strip())
-            except (ValueError, AttributeError):
-                posicion = None
-    
-    # --- Título (columna 1) ---
-    titulo = "Sin título"
-    if len(celdas) > 1:
-        # Buscar enlaces primero (son los títulos)
-        titulo_elem = celdas[1].xpath(".//a/text()")
-        if titulo_elem:
-            titulo = titulo_elem[0].strip()
-        else:
-            # Si no hay enlace, tomar texto directo
-            titulo_elem = celdas[1].xpath(".//text()")
-            if titulo_elem:
-                titulo = titulo_elem[0].strip()
-    
-    # --- Ventas (columna 2) ---
-    ventas_millones = None
-    if len(celdas) > 2:
-        ventas_elem = celdas[2].xpath(".//text()")
-        if ventas_elem:
-            ventas_texto = ventas_elem[0].strip()
-            # Limpiar: quitar "million", "million+", etc.
-            ventas_texto = re.sub(r'[^\d\.]', '', ventas_texto)
-            try:
-                if ventas_texto:
-                    ventas_millones = float(ventas_texto)
-            except ValueError:
-                ventas_millones = None
-    
-    # --- Plataforma (columna 3) ---
-    plataforma = None
-    if len(celdas) > 3:
-        plataforma_elem = celdas[3].xpath(".//text()")
-        if plataforma_elem:
-            plataforma = plataforma_elem[0].strip()
-    
-    # --- Año (columna 4) ---
-    año = None
-    if len(celdas) > 4:
-        año_elem = celdas[4].xpath(".//text()")
-        if año_elem:
-            try:
-                año = int(año_elem[0].strip())
-            except ValueError:
-                año = None
-    
-    print(f"    #{posicion if posicion else '?'}: {titulo[:40]} | Ventas: {ventas_millones if ventas_millones else '?'}M | Plataforma: {plataforma if plataforma else '?'} | Año: {año if año else '?'}")
-    
-    # ----- Crear objeto Videojuego -----
-    try:
-        juego = Videojuego(
-            posicion=posicion,
-            titulo=titulo,
-            ventas_millones=ventas_millones,
-            plataforma=plataforma,
-            año=año
-        )
-        lista_juegos.append(juego)
-        print(f"    Validado correctamente")
-    except ValidationError as e:
-        print(f"    Error al validar: {e}")
-        errores += 1
-        continue
-
-
-# ============================================================
-# PARTE 6: Exportar a JSON
-# ============================================================
-
-print(f"\n💾 Guardando datos en wikipedia_juegos.json...")
-
-juegos_dict = [juego.model_dump() for juego in lista_juegos]
-
-with open("wikipedia_juegos.json", "w", encoding="utf-8") as f:
-    json.dump(juegos_dict, f, indent=2, ensure_ascii=False)
-
-print(f" Datos guardados en wikipedia_juegos.json ({len(juegos_dict)} juegos)")
-print(f" Errores encontrados: {errores}")
-
-print("\n Ejercicio 5 Opcional completado!")
+    def parse(self, response):
+        print("\n Extrayendo datos de Wikipedia...")
+        
+        # Encontrar la tabla correcta
+        tabla = response.xpath("//table[contains(., 'Tetris') and contains(., '520')]")
+        if not tabla:
+            print(" No se encontró la tabla")
+            return
+        
+        filas = tabla.xpath(".//tr[td]")
+        print(f" Total filas: {len(filas)}\n")
+        
+        juegos = []
+        titulo_pendiente = None
+        plataforma_pendiente = None
+        año_pendiente = None
+        posicion_pendiente = None
+        
+        for i, fila in enumerate(filas, 1):
+            celdas = fila.xpath(".//td")
+            
+            # Extraer textos de cada celda
+            textos = []
+            for celda in celdas:
+                texto = self.limpiar(celda.xpath(".//text()").get())
+                textos.append(texto)
+            
+            print(f"Fila {i}: {textos[:6]}")
+            
+            # Determinar tipo de fila basado en el patrón observado
+            # Patrón 1: Fila con título en col1 (como Minecraft)
+            if len(textos) > 1 and textos[1] and not textos[1].replace('.', '').isdigit():
+                # Esta fila contiene un título
+                titulo_pendiente = textos[1]
+                posicion_pendiente = int(textos[0]) if textos[0] and textos[0].isdigit() else None
+                plataforma_pendiente = textos[2] if len(textos) > 2 else None
+                año_pendiente = int(textos[3]) if len(textos) > 3 and textos[3].isdigit() else None
+                print(f"    Título pendiente: {titulo_pendiente} (pos:{posicion_pendiente})")
+            
+            # Patrón 2: Fila con ventas en col1 y título en col2 (como GTA V)
+            elif len(textos) > 1 and textos[1] and textos[1].replace('.', '').isdigit():
+                ventas = float(textos[1])
+                posicion = int(textos[0]) if textos[0] and textos[0].isdigit() else None
+                titulo = textos[2] if len(textos) > 2 else None
+                plataforma = textos[3] if len(textos) > 3 else None
+                año = int(textos[4]) if len(textos) > 4 and textos[4].isdigit() else None
+                
+                # Si tenemos título pendiente, usar esa información
+                if titulo_pendiente:
+                    juego = Videojuego(
+                        posicion=posicion_pendiente or posicion,
+                        titulo=titulo_pendiente,
+                        ventas_millones=ventas,
+                        plataforma=plataforma_pendiente or plataforma,
+                        año=año_pendiente or año
+                    )
+                    print(f"    #{juego.posicion}: {juego.titulo} - {ventas}M - {juego.plataforma} - {juego.año}")
+                    juegos.append(juego)
+                    # Limpiar pendientes
+                    titulo_pendiente = None
+                    plataforma_pendiente = None
+                    año_pendiente = None
+                    posicion_pendiente = None
+                elif titulo:
+                    juego = Videojuego(
+                        posicion=posicion,
+                        titulo=titulo,
+                        ventas_millones=ventas,
+                        plataforma=plataforma,
+                        año=año
+                    )
+                    print(f"    #{posicion}: {titulo} - {ventas}M - {plataforma} - {año}")
+                    juegos.append(juego)
+        
+        print(f"\ Total juegos extraídos: {len(juegos)}")
+        
+        for juego in juegos:
+            yield juego.model_dump()

@@ -1,0 +1,303 @@
+[
+{
+  "posicion": 1,
+  "titulo": "None",
+  "ventas_millones": 520.0,
+  "plataforma": "Multi-platform",
+  "año": 1988
+},
+{
+  "posicion": 350,
+  "titulo": "Minecraft",
+  "ventas_millones": 225.0,
+  "plataforma": "Multi-platform",
+  "año": 2011
+},
+{
+  "posicion": 3,
+  "titulo": "Wii",
+  "ventas_millones": 82.9,
+  "plataforma": "Wii",
+  "año": 2006
+},
+{
+  "posicion": 4,
+  "titulo": "Red Dead",
+  "ventas_millones": 82.0,
+  "plataforma": "Multi-platform",
+  "año": 2018
+},
+{
+  "posicion": 5,
+  "titulo": "Mario Kart",
+  "ventas_millones": 79.05,
+  "plataforma": "Wii U",
+  "año": 2014
+},
+{
+  "posicion": 6,
+  "titulo": "PUBG Universe",
+  "ventas_millones": 75.0,
+  "plataforma": "Multi-platform",
+  "año": 2017
+},
+{
+  "posicion": 7,
+  "titulo": "None",
+  "ventas_millones": 64.0,
+  "plataforma": "Multi-platform",
+  "año": 2011
+},
+{
+  "posicion": 8,
+  "titulo": "The Witcher",
+  "ventas_millones": 60.0,
+  "plataforma": "Multi-platform",
+  "año": 2015
+},
+{
+  "posicion": 9,
+  "titulo": "Super Mario",
+  "ventas_millones": 58.0,
+  "plataforma": "Multi-platform",
+  "año": 1985
+},
+{
+  "posicion": 10,
+  "titulo": "None",
+  "ventas_millones": 55.0,
+  "plataforma": "Multi-platform",
+  "año": 2016
+},
+{
+  "posicion": 11,
+  "titulo": "Overwatch",
+  "ventas_millones": 50.0,
+  "plataforma": "Multi-platform",
+  "año": 2016
+},
+{
+  "posicion": 50,
+  "titulo": "None",
+  "ventas_millones": 49.32,
+  "plataforma": "Multi-platform",
+  "año": 2016
+},
+{
+  "posicion": 15,
+  "titulo": "Pokémon",
+  "ventas_millones": 47.44,
+  "plataforma": "Multi-platform",
+  "año": 1996
+},
+{
+  "posicion": 16,
+  "titulo": "Wii",
+  "ventas_millones": 43.8,
+  "plataforma": "Wii",
+  "año": 2007
+},
+{
+  "posicion": 17,
+  "titulo": "Call of Duty",
+  "ventas_millones": 43.0,
+  "plataforma": "Multi-platform",
+  "año": 2015
+},
+{
+  "posicion": 18,
+  "titulo": "Call of Duty",
+  "ventas_millones": 41.0,
+  "plataforma": "Multi-platform",
+  "año": 2019
+},
+{
+  "posicion": 19,
+  "titulo": "Wizarding World",
+  "ventas_millones": 40.0,
+  "plataforma": "Multi-platform",
+  "año": 2023
+},
+{
+  "posicion": 40,
+  "titulo": "Sonic the Hedgehog",
+  "ventas_millones": 37.44,
+  "plataforma": "Multi-platform",
+  "año": 1991
+},
+{
+  "posicion": 23,
+  "titulo": "Mario Kart",
+  "ventas_millones": 37.38,
+  "plataforma": "Wii",
+  "año": 2008
+},
+{
+  "posicion": 24,
+  "titulo": "The Legend of Zelda",
+  "ventas_millones": 35.34,
+  "plataforma": "Multi-platform",
+  "año": 2017
+},
+{
+  "posicion": 25,
+  "titulo": "Cyberpunk",
+  "ventas_millones": 35.0,
+  "plataforma": "Multi-platform",
+  "año": 2020
+},
+{
+  "posicion": 26,
+  "titulo": "Wii",
+  "ventas_millones": 33.14,
+  "plataforma": "Wii",
+  "año": 2009
+},
+{
+  "posicion": 27,
+  "titulo": "Super Mario",
+  "ventas_millones": 30.8,
+  "plataforma": "Nintendo DS",
+  "año": 2006
+},
+{
+  "posicion": 28,
+  "titulo": "Super Mario",
+  "ventas_millones": 30.32,
+  "plataforma": "Wii",
+  "año": 2009
+},
+{
+  "posicion": 29,
+  "titulo": "Super Mario",
+  "ventas_millones": 30.27,
+  "plataforma": "Nintendo Switch",
+  "año": 2017
+},
+{
+  "posicion": 30,
+  "titulo": "Pokémon",
+  "ventas_millones": 30.12,
+  "plataforma": "Game Boy Color",
+  "año": 1999
+},
+{
+  "posicion": 31,
+  "titulo": "Elden Ring",
+  "ventas_millones": 30.0,
+  "plataforma": "Multi-platform",
+  "año": 2022
+},
+{
+  "posicion": 30,
+  "titulo": "The Elder Scrolls",
+  "ventas_millones": 29.1,
+  "plataforma": "Multi-platform",
+  "año": 2011
+},
+{
+  "posicion": 36,
+  "titulo": "None",
+  "ventas_millones": 28.3,
+  "plataforma": "Famicom / NES",
+  "año": 1984
+},
+{
+  "posicion": 37,
+  "titulo": "Pokémon",
+  "ventas_millones": 28.08,
+  "plataforma": "Nintendo Switch",
+  "año": 2022
+},
+{
+  "posicion": 38,
+  "titulo": "Wii",
+  "ventas_millones": 28.02,
+  "plataforma": "Wii",
+  "año": 2006
+},
+{
+  "posicion": 39,
+  "titulo": "Black Myth",
+  "ventas_millones": 28.0,
+  "plataforma": "Multi-platform",
+  "año": 2024
+},
+{
+  "posicion": 40,
+  "titulo": "Grand Theft Auto",
+  "ventas_millones": 27.5,
+  "plataforma": "Multi-platform",
+  "año": 2004
+},
+{
+  "posicion": 41,
+  "titulo": "Pokémon",
+  "ventas_millones": 27.08,
+  "plataforma": "Nintendo Switch",
+  "año": 2019
+},
+{
+  "posicion": 42,
+  "titulo": "None",
+  "ventas_millones": 27.0,
+  "plataforma": "Multi-platform",
+  "año": 2021
+},
+{
+  "posicion": 43,
+  "titulo": "The Last of Us",
+  "ventas_millones": 26.6,
+  "plataforma": "PS3",
+  "año": 2013
+},
+{
+  "posicion": 44,
+  "titulo": "Call of Duty",
+  "ventas_millones": 26.5,
+  "plataforma": "Multi-platform",
+  "año": 2011
+},
+{
+  "posicion": 45,
+  "titulo": "Call of Duty",
+  "ventas_millones": 26.2,
+  "plataforma": "Multi-platform",
+  "año": 2010
+},
+{
+  "posicion": 46,
+  "titulo": "Marvel's Spider-Man",
+  "ventas_millones": 26.1,
+  "plataforma": "Multi-Platform",
+  "año": 2018
+},
+{
+  "posicion": 47,
+  "titulo": "Pokémon",
+  "ventas_millones": 25.59,
+  "plataforma": "Nintendo 3DS",
+  "año": 2016
+},
+{
+  "posicion": 48,
+  "titulo": "None",
+  "ventas_millones": 25.56,
+  "plataforma": "PC",
+  "año": 2006
+},
+{
+  "posicion": 49,
+  "titulo": "Pokémon",
+  "ventas_millones": 25.5,
+  "plataforma": "Nintendo DS",
+  "año": 2006
+},
+{
+  "posicion": 50,
+  "titulo": "None",
+  "ventas_millones": 25.0,
+  "plataforma": "Multi-platform",
+  "año": 2024
+}
+]
