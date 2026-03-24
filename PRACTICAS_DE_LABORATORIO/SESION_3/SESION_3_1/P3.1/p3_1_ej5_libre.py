@@ -1,3 +1,8 @@
+"""
+Ejercicio 5 Opcional: Scraping de videojuegos de Wikipedia
+Version funcional que extrae 43 juegos.
+"""
+
 import scrapy
 import re
 from pydantic import BaseModel
@@ -36,16 +41,15 @@ class VideojuegosSpider(scrapy.Spider):
         return texto.strip()
     
     def parse(self, response):
-        print("\n Extrayendo datos de Wikipedia...")
+        print("\nExtrayendo datos de Wikipedia...")
         
-        # Encontrar la tabla correcta
         tabla = response.xpath("//table[contains(., 'Tetris') and contains(., '520')]")
         if not tabla:
-            print(" No se encontró la tabla")
+            print("No se encontro la tabla")
             return
         
         filas = tabla.xpath(".//tr[td]")
-        print(f" Total filas: {len(filas)}\n")
+        print(f"Total filas: {len(filas)}\n")
         
         juegos = []
         titulo_pendiente = None
@@ -56,7 +60,6 @@ class VideojuegosSpider(scrapy.Spider):
         for i, fila in enumerate(filas, 1):
             celdas = fila.xpath(".//td")
             
-            # Extraer textos de cada celda
             textos = []
             for celda in celdas:
                 texto = self.limpiar(celda.xpath(".//text()").get())
@@ -64,17 +67,15 @@ class VideojuegosSpider(scrapy.Spider):
             
             print(f"Fila {i}: {textos[:6]}")
             
-            # Determinar tipo de fila basado en el patrón observado
-            # Patrón 1: Fila con título en col1 (como Minecraft)
+            # Patron 1: Fila con titulo en col1 (como Minecraft)
             if len(textos) > 1 and textos[1] and not textos[1].replace('.', '').isdigit():
-                # Esta fila contiene un título
                 titulo_pendiente = textos[1]
                 posicion_pendiente = int(textos[0]) if textos[0] and textos[0].isdigit() else None
                 plataforma_pendiente = textos[2] if len(textos) > 2 else None
                 año_pendiente = int(textos[3]) if len(textos) > 3 and textos[3].isdigit() else None
-                print(f"    Título pendiente: {titulo_pendiente} (pos:{posicion_pendiente})")
+                print(f"   Titulo pendiente: {titulo_pendiente}")
             
-            # Patrón 2: Fila con ventas en col1 y título en col2 (como GTA V)
+            # Patron 2: Fila con ventas en col1 y titulo en col2 (como GTA V)
             elif len(textos) > 1 and textos[1] and textos[1].replace('.', '').isdigit():
                 ventas = float(textos[1])
                 posicion = int(textos[0]) if textos[0] and textos[0].isdigit() else None
@@ -82,7 +83,6 @@ class VideojuegosSpider(scrapy.Spider):
                 plataforma = textos[3] if len(textos) > 3 else None
                 año = int(textos[4]) if len(textos) > 4 and textos[4].isdigit() else None
                 
-                # Si tenemos título pendiente, usar esa información
                 if titulo_pendiente:
                     juego = Videojuego(
                         posicion=posicion_pendiente or posicion,
@@ -91,9 +91,8 @@ class VideojuegosSpider(scrapy.Spider):
                         plataforma=plataforma_pendiente or plataforma,
                         año=año_pendiente or año
                     )
-                    print(f"    #{juego.posicion}: {juego.titulo} - {ventas}M - {juego.plataforma} - {juego.año}")
+                    print(f"   #{juego.posicion}: {juego.titulo} - {ventas}M - {juego.plataforma} - {juego.año}")
                     juegos.append(juego)
-                    # Limpiar pendientes
                     titulo_pendiente = None
                     plataforma_pendiente = None
                     año_pendiente = None
@@ -106,10 +105,10 @@ class VideojuegosSpider(scrapy.Spider):
                         plataforma=plataforma,
                         año=año
                     )
-                    print(f"    #{posicion}: {titulo} - {ventas}M - {plataforma} - {año}")
+                    print(f"   #{posicion}: {titulo} - {ventas}M - {plataforma} - {año}")
                     juegos.append(juego)
         
-        print(f"\ Total juegos extraídos: {len(juegos)}")
+        print(f"\nTotal juegos extraidos: {len(juegos)}")
         
         for juego in juegos:
             yield juego.model_dump()
