@@ -3,13 +3,13 @@ from typing import Optional # Para indicar que un valor puede ser None
 
 # Esquemas de datos para las tareas
 class TaskData(BaseModel):
-    """Datos que envía el cliente para crear/modificar una tarea (sin ID)"""
-    description: str
-    completada: bool = False
+    """Datos que envía el cliente para crear/modificar una tarea"""
+    description: str # Descripción de la tarea
+    completada: bool = False # Por defecto, la tarea no está completada
 
 class Task(TaskData):
     """Datos que devuelve el servidor (con ID)"""
-    id: int
+    id: int # Identificador único de la tarea
 
 # Repositorio de tareas
 class TaskRepository:
@@ -21,29 +21,21 @@ class TaskRepository:
         self.next_id = 1     # Próximo ID a asignar
     
     def _find_task_index(self, id: int) -> Optional[int]:
-        """
-        Método auxiliar "privado" (por eso empieza con _)
-        Busca el índice de una tarea por su ID.
-        Devuelve el índice si la encuentra, o None si no.
-        """
-        for i, task in enumerate(self.tasks):
-            if task.id == id:
+        for i, task in enumerate(self.tasks): # Buscar la tarea por ID y devolver su índice
+            if task.id == id: # Si encontramos la tarea con el ID buscado, devolvemos su índice
                 return i
         return None
     
     def get_all(self) -> list[Task]:
-        """Devuelve la lista completa de tareas"""
-        return self.tasks
+        return self.tasks # Devuelve la lista completa de tareas
     
     def get_by_id(self, id: int) -> Optional[Task]:
-        """Busca una tarea por su ID. Devuelve Task o None"""
-        index = self._find_task_index(id)
+        index = self._find_task_index(id) # Buscar la tarea por ID y devolverla si existe
         if index is not None:
-            return self.tasks[index]
+            return self.tasks[index] # Si encontramos la tarea, la devolvemos
         return None
     
     def add(self, task_data: TaskData) -> Task:
-        """Crea una nueva tarea y la añade a la lista"""
         # Crear la tarea con ID y los datos recibidos
         new_task = Task(
             id=self.next_id,
@@ -58,23 +50,21 @@ class TaskRepository:
         return new_task
     
     def update(self, id: int, task_data: TaskData) -> Optional[Task]:
-        """Actualiza una tarea existente. Devuelve la tarea actualizada o None"""
-        index = self._find_task_index(id)
+        index = self._find_task_index(id) # Buscar la tarea por ID y actualizarla si existe
         if index is None:
-            return None
+            return None # Si no encontramos la tarea con el ID dado, devolvemos None
         
         # Actualizar los campos de la tarea existente
-        task = self.tasks[index]
-        task.description = task_data.description
-        task.completada = task_data.completada
+        task = self.tasks[index] # Obtener la tarea que queremos actualizar
+        task.description = task_data.description # Actualizar la descripción con el nuevo valor
+        task.completada = task_data.completada # Actualizar el estado de completada con el nuevo valor
         
         return task
     
     def delete(self, id: int) -> bool:
-        """Elimina una tarea. Devuelve True si se borró, False si no existía"""
-        index = self._find_task_index(id)
+        index = self._find_task_index(id) # Buscar la tarea por ID y eliminarla si existe
         if index is None:
-            return False
+            return False # Si no encontramos la tarea con el ID dado, devolvemos False
         
         # Eliminar la tarea de la lista
         self.tasks.pop(index)
