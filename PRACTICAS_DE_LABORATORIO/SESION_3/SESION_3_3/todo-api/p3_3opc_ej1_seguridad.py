@@ -1,3 +1,8 @@
+"""
+Ejercicio 1 (Opcional): Autenticación y seguridad.
+
+
+"""
 import os
 from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
