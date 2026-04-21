@@ -1,5 +1,5 @@
 """
-Ejercicio 1: Xpath con lxml
+Ejercicio 1: Xpath con xml
 En este primer ejericio se realiza las tres consultas sobre el archivo XML:
 1. Cuenta el numero de libros de la categoría WEB.
 2. Lista los libros ccon mas de un autor.
