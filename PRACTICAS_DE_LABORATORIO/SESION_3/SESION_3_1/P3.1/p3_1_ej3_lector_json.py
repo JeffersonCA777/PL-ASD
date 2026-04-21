@@ -1,7 +1,14 @@
+"""
+Ejercicio 3: Lectura y validacion de farmacias desde JSON
+En este tercer ejercicio se lee el archivo farmacias.json generado en el ejercicio anterior, se valida cada registro utilizando Pydantic 
+y se permite al usuario buscar farmacias por población. 
+Aqui el usuario simplemente introduce una poblacion y el programa lo muestra.
+"""
+
 import json # Para leer el archivo JSON
 from pydantic import BaseModel, ValidationError # Para definir el modelo de datos y validar los datos
 
-# PARTE 1: Definir el modelo de datos (igual que en el ejercicio 2)
+# 1: Definir el modelo de datos (igual que en el ejercicio 2)
 class Farmacia(BaseModel): # Definimos un modelo de datos para representar cada farmacia
     nombre: str # El nombre de la farmacia
     direccion: str # La dirección de la farmacia
@@ -10,7 +17,7 @@ class Farmacia(BaseModel): # Definimos un modelo de datos para representar cada 
     poblacion: str # La población donde se encuentra la farmacia
     horario: str # El horario de atención de la farmacia
 
-# PARTE 2: Leer el archivo JSON
+# 2: Leer el archivo JSON
 print(" Leyendo farmacias.json...")
 
 try:
@@ -25,7 +32,7 @@ except json.JSONDecodeError as e:
     print(f" Error: El archivo JSON no tiene un formato válido: {e}")
     exit(1)
 
-# PARTE 3: Validar los datos con Pydantic
+# 3: Validar los datos con Pydantic
 print(" Validando datos con Pydantic...")
 
 lista_farmacias = [] # Lista para almacenar las farmacias válidas
@@ -47,7 +54,7 @@ if errores > 0:
 else:
     print()
 
-# PARTE 4: Buscar farmacias por población
+# 4: Buscar farmacias por población
 
 # Pedir al usuario la población a buscar
 poblacion_buscar = input(" Introduce una población para buscar farmacias: ").strip().upper()
@@ -73,4 +80,8 @@ if farmacias_encontradas: # Si se encontraron farmacias, mostrar la información
 else:
     print(f"\n No se encontraron farmacias en {poblacion_buscar}")
 
-print("\n Ejercicio 3 completado!")
+print("\n Ejercicio 3 completado")
+
+# 5. Punto de entrada del programa
+if __name__ == "__main__":
+    pass
