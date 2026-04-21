@@ -1,3 +1,11 @@
+"""
+Ejercicio 1: Xpath con lxml
+En este primer ejericio se realiza las tres consultas sobre el archivo XML:
+1. Cuenta el numero de libros de la categoría WEB.
+2. Lista los libros ccon mas de un autor.
+3. Calcula el precio total de todos los libros.
+"""
+
 from lxml import etree # Importamos la biblioteca lxml para trabajar con XML y XPath
 
 # 1. Cargar el archivo XML y parsearlo
@@ -34,7 +42,11 @@ print("\n" + "=" * 50)
 print("CONSULTA 3: Precio total de todos los libros")
 print("=" * 50)
 
-precio_total = arbol.xpath("sum(//price)")
+precio_total = arbol.xpath("sum(//price)") # Se calcula la suma total de los precios de todos los libros utilizando la función sum().
 print(f" Precio total de todos los libros: {precio_total} €")
 
 print("\n Ejercicio completado!")
+
+# 5. Punto de entrada del programa
+if __name__ == "__main__":
+    pass
