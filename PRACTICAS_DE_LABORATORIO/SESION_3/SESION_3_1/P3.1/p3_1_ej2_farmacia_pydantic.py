@@ -1,8 +1,16 @@
+"""
+Ejercicio 2: Scraping de farmacias con lxml y Pydantic
+En este sefundo ejercicio se realiza scraping de la pagina web del Colegio de Farmaceuticos
+de Asturias para extraer informacion. 
+
+Estos datos se validan usando Pydantic y se exportan a un archivo JSON.
+"""
+
 import json # Importamos la biblioteca json para trabajar con archivos JSON
 from lxml import html # Importamos la biblioteca lxml para trabajar con HTML y XPath
 from pydantic import BaseModel, ValidationError # Importamos para definir modelos de datos y manejar errores de validación
 
-# PARTE 1: Definir el modelo de datos con Pydantic
+# 1: Definir el modelo de datos con Pydantic
 
 class Farmacia(BaseModel): # Definimos una clase Farmacia que hereda de BaseModel de Pydantic para validar los datos de cada farmacia
     nombre: str # El nombre de la farmacia
@@ -12,20 +20,20 @@ class Farmacia(BaseModel): # Definimos una clase Farmacia que hereda de BaseMode
     poblacion: str # La población donde se encuentra la farmacia, extraída usando XPath con preceding::
     horario: str # El horario de la farmacia, extraído usando XPath con preceding::
 
-# PARTE 2: Cargar el HTML y parsearlo
+# 2: Cargar el HTML y parsearlo
 
 print(" Cargando pagina-farmacias.html...")
 with open("pagina-farmacias.html", "rb") as f: # Abrimos el archivo HTML en modo lectura binaria para cargarlo
     arbol = html.parse(f) # Parseamos el archivo HTML para crear un árbol de elementos que podemos consultar con XPath
 print(" HTML cargado correctamente\n")
 
-# PARTE 3: Seleccionar todas las farmacias
+# 3: Seleccionar todas las farmacias
 
 print(" Buscando farmacias...")
 farmacias_nodos = arbol.xpath("//ul[@class='ListadoResultados']") # Utilizamos XPath para seleccionar todos los elementos <ul>
 print(f" Se encontraron {len(farmacias_nodos)} farmacias\n")
 
-# PARTE 4: Extraer los datos de cada farmacia
+# 4: Extraer los datos de cada farmacia
 
 lista_farmacias = [] # Creamos una lista vacía para almacenar los objetos Farmacia que vamos a crear a partir de los datos extraídos
 
@@ -95,7 +103,7 @@ for i, nodo in enumerate(farmacias_nodos, 1):
 
 print(f"\n Se procesaron {len(lista_farmacias)} farmacias correctamente")
 
-# PARTE 5: Exportar a JSON
+# 5: Exportar a JSON
 
 print("\n Guardando datos en farmacias.json...")
 
@@ -108,4 +116,8 @@ with open("farmacias.json", "w", encoding="utf-8") as f:
 
 print(f" Datos guardados en farmacias.json ({len(farmacias_dict)} farmacias)")
 
-print("\n Ejercicio 2 completado!")
+print("\n Ejercicio 2 completado")
+
+# 6. Punto de entrada del programa
+if __name__ == "__main__":
+    pass
