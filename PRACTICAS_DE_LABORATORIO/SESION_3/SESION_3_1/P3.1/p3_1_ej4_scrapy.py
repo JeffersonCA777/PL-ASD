@@ -1,7 +1,14 @@
+"""
+Ejercicio 4: Scraping de farmacias con Scrapy
+En este cuarto ejercicio, se reimplementa el scrping de farmacias del ejericio 2
+utilizando el framework Scrapy.
+Practicamente se extraen los mismos datos pero con Scrapy y los guarda en un archivo JSON.
+"""
+
 import scrapy # Librería principal de Scrapy para crear spiders
 from pydantic import BaseModel, ValidationError # Pydantic para definir modelos de datos y validación
 
-# PARTE 1: Definir el modelo de datos 
+# 1: Definir el modelo de datos 
 class Farmacia(BaseModel): # Modelo de datos para representar una farmacia
     nombre: str # Nombre de la farmacia
     direccion: str # Dirección de la farmacia
@@ -10,7 +17,7 @@ class Farmacia(BaseModel): # Modelo de datos para representar una farmacia
     poblacion: str # Población donde se encuentra la farmacia
     horario: str # Horario de guardia 
 
-# PARTE 2: Definir el Spider
+# 2: Definir el Spider
 class FarmaciaSpider(scrapy.Spider): # Clase que define el spider para extraer datos de farmacias
     # Nombre único del spider (para identificarlo al ejecutar)
     name = "farmacias"
@@ -105,4 +112,8 @@ class FarmaciaSpider(scrapy.Spider): # Clase que define el spider para extraer d
                 print(f"    Error al validar: {e}")
                 continue
         
-        print("\n Spider completado!")
+        print("\n Spider completado")
+
+# 3. Punto de entrada al programa 
+if __name__ == "__main__":
+    pass
