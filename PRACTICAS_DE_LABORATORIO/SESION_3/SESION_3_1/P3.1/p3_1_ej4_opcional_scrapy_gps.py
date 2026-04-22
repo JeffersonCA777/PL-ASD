@@ -1,8 +1,15 @@
+"""
+Ejercicio 4 Opcional: Scraping de farmacias con Scrapy y extraccion de GPS
+
+Este cuarto ejercicio opcional se amplia el spider del ejercicio 4 para extraer datos de las coordenadas 
+GPS.
+"""
+
 import re # Para expresiones regulares
 import scrapy # Para el framework de scraping
 from pydantic import BaseModel, ValidationError # Para definir el modelo de datos y validar los resultados
 
-# PARTE 1: Definir el modelo de datos
+# 1: Definir el modelo de datos
 class Farmacia(BaseModel):
     """Modelo que representa una farmacia con todos sus campos"""
     nombre: str # Nombre de la farmacia
@@ -14,7 +21,7 @@ class Farmacia(BaseModel):
     latitud: float | None = None      # Puede ser None si no se encuentra
     longitud: float | None = None     # Puede ser None si no se encuentra
 
-# PARTE 2: Definir el Spider con seguimiento de enlaces
+# 2: Definir el Spider con seguimiento de enlaces
 class FarmaciaGPSSpider(scrapy.Spider): # El nombre de la clase es FarmaciaGPSSpider y hereda de scrapy.Spider
     """Spider que extrae farmacias y sus coordenadas GPS"""
     # Nombre único del spider
@@ -159,3 +166,7 @@ class FarmaciaGPSSpider(scrapy.Spider): # El nombre de la clase es FarmaciaGPSSp
         except ValidationError as e:
             print(f"    Error al validar: {e}")
             yield item
+
+# 3: Punto de partida del progrma
+if __name__ == "__main__":
+    pass
