@@ -1,0 +1,16 @@
+services:
+  nginx:
+    container_name: nginx
+    image: nginx:latest
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - 80:80
+    links:
+      - hola
+
+  hola:
+    container_name: hola
+    image: helloapp:v1
+    build:
+      context: ./
