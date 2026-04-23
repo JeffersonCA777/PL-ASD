@@ -258,4 +258,4 @@ def on_startup():
 # Punto de entrada para ejecutar la aplicación con Uvicorn.
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000) # Se ejecuta la aplicación en el host y puerto especificados.
+    uvicorn.run(app, host="0.0.0.0", port=8000) # Se ejecuta la aplicación en el host y puerto
