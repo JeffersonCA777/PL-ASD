@@ -1,0 +1,19 @@
+# Archivos de entorno con secretos
+.env
+
+# Archivos de Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Bases de datos locales
+*.db
+*.sqlite
+*.sqlite3
+
+# Archivos de VS Code
+.vscode/
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
