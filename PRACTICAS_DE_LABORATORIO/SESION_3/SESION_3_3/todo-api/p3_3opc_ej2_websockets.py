@@ -179,3 +179,87 @@ class TaskRepository:
         self.db.delete(db_task)
         self.db.commit()
         return Tr
+
+def get_repo(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+) -> TaskRepository:
+    """Dependencia que inyecta un TaskRepository para el usuario actual."""
+    return TaskRepository(db, current_user.id)
+
+
+class ChatManager:
+    """Gestiona las conexiones WebSocket activas y el broadcast de mensajes."""
+    
+    def __init__(self):
+        """Inicializa la lista vacia de conexiones."""
+        self.active_connections: List[WebSocket] = []
+    
+    async def accept(self, websocket: WebSocket):
+        """Acepta una nueva conexion WebSocket y la añade a la lista."""
+        await websocket.accept()
+        self.active_connections.append(websocket)
+    
+    def disconnect(self, websocket: WebSocket):
+        """Elimina una conexion WebSocket de la lista."""
+        self.active_connections.remove(websocket)
+    
+    async def broadcast(self, message: str):
+        """Envia un mensaje a todos los clientes conectados."""
+        for connection in self.active_connections:
+            await connection.send_text(message)
+
+
+# Instancia global del gestor de chat
+chat_manager = ChatManager()
+
+
+@app.websocket("/ws")
+async def websocket_endpoint(
+    websocket: WebSocket,
+    token: Optional[str] = None,
+    db: Session = Depends(get_db)
+):
+    """
+    Endpoint WebSocket para el chat grupal.
+    El token se pasa como parametro en la URL: /ws?token=...
+    """
+    
+    # Verificar que se proporciono el token
+    if token is None:
+        await websocket.close(code=status.WS_1008_POLICY_VIOLATION)
+        return
+    
+    # Decodificar token y obtener el usuario
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        username = payload.get("sub")
+        if username is None:
+            await websocket.close(code=status.WS_1008_POLICY_VIOLATION)
+            return
+    except JWTError:
+        await websocket.close(code=status.WS_1008_POLICY_VIOLATION)
+        return
+    
+    # Verificar que el usuario existe en la base de datos
+    user = db.exec(select(User).where(User.username == username)).first()
+    if user is None:
+        await websocket.close(code=status.WS_1008_POLICY_VIOLATION)
+        return
+    
+    # Aceptar la conexion
+    await chat_manager.accept(websocket)
+    
+    # Notificar que el usuario se ha conectado
+    await chat_manager.broadcast(f"System: {username} se ha conectado al chat")
+    
+    try:
+        # Bucle para recibir mensajes
+        while True:
+            data = await websocket.receive_text()
+            mensaje = f"{username}: {data}"
+            await chat_manager.broadcast(mensaje)
+    except WebSocketDisconnect:
+        # El usuario se desconecto
+        chat_manager.disconnect(websocket)
+        await chat_manager.broadcast(f"System: {username} se ha desconectado")
