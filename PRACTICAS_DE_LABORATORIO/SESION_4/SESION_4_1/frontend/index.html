@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Tareas</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 50px auto; padding: 20px; }
+        h1 { color: #333; }
+        #task-list { list-style: none; padding: 0; }
+        #task-list li { padding: 10px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; }
+        .completed { text-decoration: line-through; color: #999; }
+        button { background: #ff4444; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer; }
+        input[type="text"] { width: 70%; padding: 8px; margin-right: 10px; }
+        #add-btn { background: #4CAF50; color: white; border: none; padding: 8px 15px; border-radius: 3px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>📝 Lista de Tareas</h1>
+    <div>
+        <input type="text" id="task-input" placeholder="Nueva tarea...">
+        <button id="add-btn">Añadir</button>
+    </div>
+    <ul id="task-list"></ul>
+
+    <script>
+        // La API está en el mismo servidor (gracias a Nginx)
+        const API_URL = '/tasks';
+        
+        async function loadTasks() {
+            const response = await fetch(API_URL);
+            const tasks = await response.json();
+            const list = document.getElementById('task-list');
+            list.innerHTML = '';
+            tasks.forEach(task => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <span class="${task.completed ? 'completed' : ''}">${task.title}</span>
+                    <div>
+                        <button onclick="toggleTask(${task.id})">✓</button>
+                        <button onclick="deleteTask(${task.id})">✗</button>
+                    </div>
+                `;
+                list.appendChild(li);
+            });
+        }
+
+        async function addTask() {
+            const input = document.getElementById('task-input');
+            const title = input.value.trim();
+            if (!title) return;
+            await fetch(API_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ title: title })
+            });
+            input.value = '';
+            loadTasks();
+        }
+
+        async function toggleTask(id) {
+            await fetch(`${API_URL}/${id}/toggle`, { method: 'PUT' });
+            loadTasks();
+        }
+
+        async function deleteTask(id) {
+            await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+            loadTasks();
+        }
+
+        document.getElementById('add-btn').addEventListener('click', addTask);
+        document.getElementById('task-input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') addTask();
+        });
+
+        loadTasks();
+    </script>
+</body>
+</html>

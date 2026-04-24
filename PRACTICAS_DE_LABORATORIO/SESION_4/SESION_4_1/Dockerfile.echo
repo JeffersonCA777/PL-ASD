@@ -1,0 +1,7 @@
+FROM python:3.11
+
+RUN mkdir /app
+COPY ./echo_server.py /app
+WORKDIR /app
+
+CMD ["python", "echo_server.py"]
