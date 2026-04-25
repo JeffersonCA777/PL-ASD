@@ -1,5 +1,5 @@
 """
-Cliente 1 para el chat WebSocket.
+Ejercicio 2 (Opcional): Cliente 1 para el chat WebSocket.
 Este cliente se conecta al chat grupal usando WebSocket.
 Se autentica con el usuario testuser y permite enviar y recibir mensajes.
 """
