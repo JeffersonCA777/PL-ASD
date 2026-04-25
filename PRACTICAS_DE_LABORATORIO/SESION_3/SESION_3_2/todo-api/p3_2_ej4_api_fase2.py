@@ -1,8 +1,17 @@
+"""
+Ejercicio 4: API persistente con SQLModel y SQLite
+
+En este cuarto ejercicio se implementa una API REST para gestionar tareas
+utilizando SQLModel como ORM y SQLite como base de datos persistente.
+Los datos sobreviven al reinicio del servidor.
+"""
+# 1: IMPORTACIÓN DE LIBRERÍAS
 from fastapi import FastAPI, Depends, HTTPException # Importamos FastAPI, Depends para inyección de dependencias y HTTPException para manejar errores
 from fastapi.middleware.cors import CORSMiddleware # Middleware para permitir CORS 
 from sqlmodel import SQLModel, Field, create_engine, Session, select # Importamos SQLModel para definir modelos, Field para campos de modelo, create_engine para conectar a la base de datos, Session para manejar sesiones y select para consultas
 from typing import Optional # Para indicar que un valor puede ser None
 
+# 2: MODELOS DE DATOS
 class TaskBase(SQLModel): # Modelo base para tareas, sin ID
     description: str # Descripción de la tarea
     completada: bool = False # Por defecto, la tarea no está completada
@@ -13,8 +22,7 @@ class Task(TaskBase, table=True): # Modelo para tareas que se guardan en la base
 class TaskData(TaskBase): # Modelo para los datos que envía el cliente al crear o modificar una tarea (sin ID)
     pass
 
-
-# CONFIGURACIÓN DE LA BASE DE DATOS
+# 3: CONFIGURACIÓN DE LA BASE DE DATOS
 
 DATABASE_URL = "sqlite:///tareas.db" # URL de conexión a la base de datos SQLite 
 engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
@@ -22,12 +30,12 @@ engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
 def create_db_and_tables(): # Función para crear la base de datos y las tablas si no existen
     SQLModel.metadata.create_all(engine)
 
-# INSTANCIA DE FASTAPI
+# 4: INSTANCIA DE FASTAPI
 
 app = FastAPI(title="To-Do List API con SQLite", description="API persistente con base de datos") # Creamos la instancia de FastAPI con un título y descripción para la documentación automática
 
 
-# CONFIGURACIÓN CORS
+# 5: CONFIGURACIÓN CORS
 
 app.add_middleware(
     CORSMiddleware,
@@ -37,7 +45,7 @@ app.add_middleware(
 ) # Middleware para permitir solicitudes desde cualquier origen, con cualquier método y encabezados
 
 
-# DEPENDENCIAS
+# 6: DEPENDENCIAS
 
 def get_db(): # Función para obtener una sesión de base de datos, que se cerrará automáticamente al finalizar la solicitud
     with Session(engine) as db:
@@ -84,7 +92,7 @@ def get_repo(db: Session = Depends(get_db)) -> TaskRepository: # Función de dep
     return TaskRepository(db)
 
 
-# ENDPOINTS (IDÉNTICOS AL EJERCICIO 2)
+# 7: ENDPOINTS (IDÉNTICOS AL EJERCICIO 2)
 
 @app.get("/tasks", response_model=list[Task]) # Endpoint para obtener la lista de todas las tareas, devuelve una lista de objetos Task
 def list_tasks(repo: TaskRepository = Depends(get_repo)) -> list[Task]:
@@ -115,6 +123,11 @@ def delete_task(id: int, repo: TaskRepository = Depends(get_repo)):
     return
 
 
-# CREAR TABLAS AL INICIAR
+# 8: CREAR TABLAS AL INICIAR
 
 create_db_and_tables()
+
+# 9: PUNTO DE ENTRADA DEL PROGRAMA
+
+if __name__ == "__main__":
+    pass
