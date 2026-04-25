@@ -1,6 +1,14 @@
+"""
+Servidor echo multi-hilo para el de despliegue de servicios en contenedores.
+Este servidor escucha en el puerto 6000 y devuelve (hace echo) de todos los datos
+que recibe de los clientes conectados. 
+"""
+
+# 1. Librerias
 import socket
 import threading
 
+# 2. Funcion para manejar cada cliente
 def handle_client(conn, addr):
     print(f"[+] Conexión desde {addr}")
     while True:
@@ -12,9 +20,10 @@ def handle_client(conn, addr):
     print(f"[-] Conexión cerrada: {addr}")
     conn.close()
 
+# 3. Funcion principal
 def main():
     host = '0.0.0.0'
-    port = 6000
+    port = 6000 # Incia el puerto 6000 para el servidor echo
     
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -28,5 +37,6 @@ def main():
         thread.daemon = True
         thread.start()
 
+# 4. Punto de entrada del programa
 if __name__ == '__main__':
     main()
