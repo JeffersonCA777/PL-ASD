@@ -1,7 +1,15 @@
+"""
+Ejercicio 1: API REST para gestión de tareas.
+En este primer ejercicio se implementa la capa de datos de la API de lista de tareas.
+Se definen los esquemas Pydantic para la validación de datos
+y la clase TaskRepository.
+"""
+
+# 1. Importar las librerías necesarias
 from pydantic import BaseModel # Para definir los esquemas de datos
 from typing import Optional # Para indicar que un valor puede ser None
 
-# Esquemas de datos para las tareas
+# 2. Esquemas Pydantic para la validación de datos
 class TaskData(BaseModel):
     """Datos que envía el cliente para crear/modificar una tarea"""
     description: str # Descripción de la tarea
@@ -11,7 +19,7 @@ class Task(TaskData):
     """Datos que devuelve el servidor (con ID)"""
     id: int # Identificador único de la tarea
 
-# Repositorio de tareas
+# 3. Repositorio en memoria para almacenar las tareas
 class TaskRepository:
     """Almacena las tareas en una lista en memoria"""
     
@@ -69,3 +77,7 @@ class TaskRepository:
         # Eliminar la tarea de la lista
         self.tasks.pop(index)
         return True
+    
+# 4. Punto de entrada del programa
+if __name__ == "__main__":
+    pass
