@@ -1,9 +1,18 @@
+"""
+Ejercicio 2: API REST completa con FastAPI y repositorio en memoria
+
+En este segundo ejercicio se implementa una API REST completa para gestionar
+una lista de tareas. Se incluyen los endpoints GET, POST, PUT y DELETE,
+configuración CORS, inyección de dependencias y manejo de errores con HTTPException.
+"""
+
+# 1: IMPORTACIÓN DE LIBRERÍAS
 from fastapi import FastAPI, Depends, HTTPException # Importamos FastAPI, Depends para de dependencias y HTTPException para manejar errores
 from fastapi.middleware.cors import CORSMiddleware # Middleware para configurar CORS 
 from pydantic import BaseModel # Importamos BaseModel de Pydantic para definir los esquemas de datos
 from typing import Optional # Importamos Optional para indicar que un valor puede ser None
 
-# ESQUEMAS PYDANTIC
+# 2: ESQUEMAS PYDANTIC
 
 class TaskData(BaseModel): # Esquema para la creación y actualización de tareas
     description: str
@@ -12,7 +21,7 @@ class TaskData(BaseModel): # Esquema para la creación y actualización de tarea
 class Task(TaskData): # Esquema que extiende TaskData e incluye el campo id
     id: int
 
-# REPOSITORIO EN MEMORIA
+# 3: REPOSITORIO EN MEMORIA
 
 class TaskRepository: # Clase que actúa como repositorio en memoria para gestionar las tareas
     
@@ -63,12 +72,11 @@ class TaskRepository: # Clase que actúa como repositorio en memoria para gestio
         self.tasks.pop(index)
         return True
 
-# INSTANCIA DE FASTAPI
+# 4: INSTANCIA DE FASTAPI
 
 app = FastAPI(title="To-Do List API", description="API para gestionar una lista de tareas") # Creamos una instancia de FastAPI con un título y descripción para la documentación automática
 
-# CONFIGURACIÓN CORS (para poder probar desde el navegador)
-
+# 5: CONFIGURACIÓN CORS (para poder probar desde el navegador)
 
 app.add_middleware(
     CORSMiddleware,
@@ -77,14 +85,14 @@ app.add_middleware(
     allow_headers=["*"],        # Permitimos todas las cabeceras
 )
 
-# DEPENDENCIA: función que devuelve el repositorio
+# 6: DEPENDENCIA: función que devuelve el repositorio
 
 _repo = TaskRepository()
 
 def get_repo() -> TaskRepository: # Función de dependencia que devuelve la instancia del repositorio
     return _repo
 
-# ENDPOINTS DE LA API
+# 7: ENDPOINTS DE LA API
 
 @app.get("/tasks", response_model=list[Task]) # Endpoint para obtener todas las tareas, devuelve una lista de objetos Task
 def list_tasks(repo: TaskRepository = Depends(get_repo)) -> list[Task]:
@@ -117,3 +125,8 @@ def delete_task(id: int, repo: TaskRepository = Depends(get_repo)):
     if not repo.delete(id):
         raise HTTPException(status_code=404, detail="Tarea no encontrada")
     return  # No devuelve contenido, solo el código 204
+
+# 8: PUNTO DE ENTRADA DEL PROGRAMA
+
+if __name__ == "__main__":
+    pass
